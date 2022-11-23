@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <p>{{ title }}</p>
+    <p>{{ content }}</p>
+    <p>{{ title }}</p>
+    <p>{{ content }}</p>
+    <button @click="setTitle">SET TITLE</button>
+    <button @click="setContent">SET CONTENT</button>
+    <button @click="reset">RESET</button>
+  </div>
+  <script type="module">
+    import { createApp, ref } from '../answer/index.js'
+
+    createApp('#app', {
+      refs: {
+        title: ref('This is title'),
+        content: ref('This is content')
+      },
+      methods: {
+        setTitle () {
+          this.title.value = '这是标题'
+        },
+        setContent () {
+          this.content.value = '这是内容'
+        },
+        reset () {
+          this.title.$reset()
+          this.content.$reset()
+        }
+      }
+    })
+  </script>
+</body>
+</html>

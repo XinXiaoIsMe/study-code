@@ -1,4 +1,4 @@
-const reg_var = /\{\{(.*?)\}\}/
+export const reg_var = /\{\{(.*?)\}\}/
 
 export function shouldRender (node) {
   return reg_var.test(node.textContent)

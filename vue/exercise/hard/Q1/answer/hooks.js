@@ -1,6 +1,5 @@
 import { update } from './render.js'
-import { nodeTypes } from './utils.js'
-const reg_var = /\{\{(.*?)\}\}/
+import { nodeTypes, reg_var } from './utils.js'
 
 class Ref {
   constructor (initialValue) {

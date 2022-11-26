@@ -125,19 +125,37 @@
 /**
  * computed test
  */
+// import {
+//   createProxy,
+//   effect,
+//   computed
+// } from './reactive-system/index.js'
+
+// const state = createProxy({
+//   a: 1,
+//   b: 2
+// })
+// const sum = computed(() => state.a + state.b)
+// effect(() => {
+//   console.log('sum', sum.value)
+// })
+
+// state.a = 3
+
+/**
+ * watch test
+ */
 import {
   createProxy,
-  effect,
-  computed
+  watch
 } from './reactive-system/index.js'
 
 const state = createProxy({
-  a: 1,
-  b: 2
-})
-const sum = computed(() => state.a + state.b)
-effect(() => {
-  console.log('sum', sum.value)
+  a: 1
 })
 
-state.a = 3
+watch(state, () => {
+  console.log('changed')
+}, { immediate: true })
+
+state.a ++

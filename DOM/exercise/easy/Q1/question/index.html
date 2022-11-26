@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div>
+    <div id="answer">
+      <div>
+        <p>
+          <span id="node-a">A</span>
+        </p>
+      </div>
+      <div>
+        <span id="node-b">B</span>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import findCommonParent from '../answer/index.js'
+
+    function test () {
+      const oNodeA = document.getElementById('node-a')
+      const oNodeB = document.getElementById('node-b')
+      const oParent = findCommonParent(oNodeA, oNodeB)
+
+      if (oParent.id === 'answer') {
+        console.log('answer', oParent)
+        alert('success')
+      } else {
+        alert('failed')
+      }
+    }
+
+    test()
+  </script>
+</body>
+</html>

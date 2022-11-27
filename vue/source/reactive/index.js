@@ -151,11 +151,35 @@ import {
 } from './reactive-system/index.js'
 
 const state = createProxy({
-  a: 1
+  a: 1,
+  b: 0
 })
 
-watch(state, () => {
-  console.log('changed')
-}, { immediate: true })
+// watch(state, () => {
+//   console.log('changed')
+// }, { immediate: true })
 
-state.a ++
+// state.a ++
+// 测试竞态问题
+let count = 1
+const responseTime = [1000, 300]
+watch(() => state.b, async (newValue, oldValue, onInvalidate) => {
+  let expired = false // 用于判断是否过期
+
+  onInvalidate(() => {
+    expired = true
+  })
+
+  const res = await new Promise(resolve => {
+    setTimeout(() => resolve(`请求${ newValue }`), responseTime[count ++])
+  })
+
+  if (!expired) {
+    console.log(res)
+  }
+})
+
+state.b ++
+setTimeout(() => {
+  state.b ++
+}, 200)

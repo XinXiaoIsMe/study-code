@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <!-- 
+    给定参数n,从1到n会有n个整数:1,2,3,...,n,
+        这n个数字共有n!种排列.
+      按大小顺序升序列出所有排列的情况,并一一标记,
+      当n=3时,所有排列如下:
+      "123" "132" "213" "231" "312" "321"
+      给定n和k,返回第k个排列.
+
+      输入描述:
+        输入两行，第一行为n，第二行为k，
+        给定n的范围是[1,9],给定k的范围是[1,n!]。
+      输出描述：
+        输出排在第k位置的数字。
+
+      实例1：
+        输入:
+          3
+          3
+        输出：
+          213
+        说明
+          3的排列有123,132,213...,那么第三位置就是213
+
+      实例2：
+        输入
+          2
+          2
+        输出：
+          21
+        说明
+          2的排列有12,21，那么第二位置的为21
+   -->
+   <script>
+    // 这一题主要考察全排列，可先做leetcode46题
+    function answer (n, k) {
+      const ret = []
+      const paths = []
+      const bools = []
+      
+      dfs(ret, n, paths, bools)
+
+      ret.sort((a, b) => a - b)
+      console.log(ret[k - 1]) // 打印结果
+    }
+
+    function dfs (ret, n, paths, bools) {
+      if (paths.length === n) {
+        ret.push(paths.reduce((n1, n2) => Number(n1 + '' + n2)))
+        return
+      }
+
+      for (let i = 1; i <= n; i ++) {
+        if (bools[i - 1]) continue
+        paths.push(i)
+        bools[i - 1] = true
+        dfs(ret, n, paths, bools)
+        paths.pop()
+        bools[i - 1] = false
+      }
+    }
+
+    // test
+    answer(3, 3) // 213
+    answer(2, 2) // 21
+   </script>
+</body>
+</html>

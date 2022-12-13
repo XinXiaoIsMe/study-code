@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <!-- 
+    游戏规则：输入一个只包含英文字母的字符串，
+        字符串中的俩个字母如果相邻且相同，就可以消除。
+        在字符串上反复执行消除的动作，
+        直到无法继续消除为止，
+        此时游戏结束。
+        输出最终得到的字符串长度。
+
+        输出：原始字符串str只能包含大小写英文字母，字母的大小写敏感，长度不超过100，
+        输出游戏结束后字符串的长度
+
+        备注：输入中包含非大小写英文字母是均为异常输入，直接返回0。
+
+        事例：mMbccbc输出为3
+   -->
+
+   <script>
+    // 使用两个指针，一个指向当前需要比较的字母(start)，一个用于遍历(p)，
+    // 如果两个指针指向的字母相等则修改对应records数组的项为0，start后移一位（
+    // 删除掉两个相邻的字母后，start后面的字母就会和下一次循环指向的字母相邻，此时需要比较这两个字母），
+    // 否则移动当前指针到遍历指针(start = p)
+    function answer (str) {
+      if (!/^[a-zA-z]*$/.test(str)) {
+        console.log(0)
+        return
+      }
+
+      let start = 0
+      let p = 1
+      const records = Array(str.length).fill(1)
+      while (p < str.length) {
+        if (str[p] !== str[start]) {
+          start = p
+        } else {
+          records[start] = records[p] = 0
+          start --
+        }
+
+        p ++
+      }
+
+      console.log(records, records.filter(record => record).length)
+    }
+
+    // test
+    answer('mMbccbc') // 3
+   </script>
+</body>
+</html>

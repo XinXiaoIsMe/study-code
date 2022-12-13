@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <!-- 
+    给定一个字符串S
+
+        变化规则:
+         交换字符串中任意两个不同位置的字符
+
+        输入描述：
+         一串小写字母组成的字符串
+        输出描述：
+         按照要求变换得到最小字符串
+
+        实例1：
+         输入：、
+         abcdef
+        输出
+         abcdef
+
+        实例2：
+         输入
+         bcdefa
+         输出
+         acdefb
+
+        s都是小写字符组成
+        1<=s.length<=1000
+   -->
+
+   <script>
+    function answer (str) {
+      const arr = str.split('')
+      let cur
+      for (let i = 0; i < arr.length; i ++) {
+        cur = i
+        for (let j = i + 1; j < arr.length; j ++) {
+          if (arr[cur] > arr[j]) {
+            cur = j
+          }
+        }
+        if (cur !== i) {
+          [arr[i], arr[cur]] = [arr[cur], arr[i]]
+          break
+        }
+      }
+
+      console.log(arr.join(''))
+    }
+
+    // test
+    answer('abcdef') // abcdef
+    answer('bcdefa') // acdefb
+   </script>
+</body>
+</html>

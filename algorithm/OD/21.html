@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <!-- 
+    一个工厂有m条流水线
+        来并行完成n个独立的作业
+        该工厂设置了一个调度系统
+        在安排作业时，总是优先执行处理时间最短的作业
+        现给定流水线个数m
+        需要完成的作业数n
+        每个作业的处理时间分别为 t1,t2...tn
+        请你编程计算处理完所有作业的耗时为多少
+        当n>m时 首先处理时间短的m个作业进入流水线
+        其他的等待
+        当某个作业完成时，
+        依次从剩余作业中取处理时间最短的
+        进入处理
+
+        输入描述：
+        第一行为两个整数(采取空格分隔)
+        分别表示流水线个数m和作业数n
+        第二行输入n个整数(采取空格分隔)
+        表示每个作业的处理时长 t1,t2...tn
+        0<m,n<100
+        0<t1,t2...tn<100
+
+        输出描述
+        输出处理完所有作业的总时长
+
+        案例
+        输入
+3 5
+8 4 3 2 10
+        输出
+        13
+        说明
+        先安排时间为2,3,4的三个作业
+        第一条流水线先完成作业
+        调度剩余时间最短的作业8
+        第二条流水线完成作业
+        调度剩余时间最短的作业10
+        总共耗时 就是二条流水线完成作业时间13(3+10)
+
+        3 9
+        1 1 1 2 3 4 6 7 8
+   -->
+
+   <script>
+    function answer (input) {
+      const [[m, n], times] = input.split('\n').filter(row => row).map(row => row.split(' ').map(v => Number(v)))
+      const queue = []
+      let count = 0
+      let cur
+
+      times.sort((a, b) => a - b)
+      
+      let i = 0
+      for (; i < m; i ++) {
+        queue.push(times[i]) // 首先放入m个，显然队列是有序且按任务时间递增排列
+      }
+      for (; i < times.length; i ++) {
+        cur = queue[0] + times[i] // 当第一个执行完后，添加新的任务，计算此时这条任务线需要耗费的时间，此时这条任务线费时最长，因此需要放入队列末尾
+        // 将第一个任务放到末尾
+        queue.shift()
+        queue.push(cur)
+      }
+
+      console.log(queue.at(-1)) // 取出所有任务线中耗时最长的
+    }
+
+    // test
+    answer(`3 5
+8 4 3 2 10`) // 13
+    answer(`3 9
+1 1 1 2 3 4 6 7 8`) // 13
+   </script>
+</body>
+</html>

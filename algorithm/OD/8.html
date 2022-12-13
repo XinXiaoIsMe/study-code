@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <!-- 
+    给出一个只包含字母的字符串,
+    不包含空格,统计字符串中各个子字母(区分大小写)出现的次数,
+    并按照字母出现次数从大到小的顺序输出各个字母及其出现次数
+    如果次数相同,按照自然顺序排序,且小写字母在大写字母之前
+
+    输入描述:
+      输入一行仅包含字母的字符串
+
+    输出描述:
+      按照字母出现次数从大到小的顺序输出各个字母和字母次数,
+      用英文分号分割,
+      注意末尾的分号
+      字母和次数中间用英文冒号分隔
+
+    示例:
+        输入: xyxyXX
+        输出:x:2;y:2;X:2;
+    说明:每个字符出现的次数为2 故x排在y之前
+    而小写字母x在大写X之前
+
+    示例2:
+        输入:
+         abababb
+        输出:
+            b:4;a:3;
+        说明:b的出现个数比a多 故排在a前
+   -->
+
+   <script>
+    function answer (str) {
+      const map = new Map()
+      let char
+      
+      for (let i = 0; i < str.length; i ++) {
+        char = str[i]
+        if (map.has(char)) {
+          map.set(char, map.get(char) + 1)
+        } else {
+          map.set(char, 1)
+        }
+      }
+
+      console.log([...map])
+
+      const ret = [...map].sort((cur, pre) => {
+        if (pre[1] - cur[1] === 0) {
+          const preCode = pre[0].charCodeAt()
+          const curCode = cur[0].charCodeAt()
+          if (preCode >= 97 && curCode < 97) {
+            return 1
+          }
+          return 0
+        } else {
+          return pre[1] - cur[1]
+        }
+      })
+      console.log(ret.map(item => item.join(':')).join(';') + ';')
+    }
+
+    answer('xyxyXX') // x:2;y:2;X:2;
+    answer('abababb') // b:4;a:3;
+    answer('xyXXxy') // x:2;y:2;X:2;
+   </script>
+</body>
+</html>

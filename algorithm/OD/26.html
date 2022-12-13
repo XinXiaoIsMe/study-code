@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <!-- 
+    停车场有一横排车位0代表没有停车,1代表有车.
+       至少停了一辆车在车位上,也至少有一个空位没有停车.
+       为防止刮蹭,需为停车人找到一个车位
+       使得停车人的车最近的车辆的距离是最大的
+       返回此时的最大距离
+
+       输入描述:
+       1. 一个用半角逗号分割的停车标识字符串,停车标识为0或1,
+        0为空位,1为已停车
+       2. 停车位最多有100个
+
+       输出描述
+       1. 输出一个整数记录最大距离
+
+       示例一:
+       输入
+       1,0,0,0,0,1,0,0,1,0,1
+
+        0,0,1,1,0,0
+       输出
+       2
+
+       说明
+       当车停在第三个位置上时,离其最近的车距离为2(1~3)
+       当车停在第四个位置上时,离其最近的车距离为2(4~6)
+       其他位置距离为1
+       因此最大距离为2
+   -->
+   <script>
+    function answer (input) {
+      const parks = input.split(',')
+      let startIdx = parks.findIndex(park => park === '1')
+      let maxDistance = startIdx
+      let i = startIdx + 1
+      let middleIdx
+      
+      while (i < parks.length) {
+        if (parks[i] === '1') {
+          middleIdx = Math.floor((i + startIdx) / 2)
+          maxDistance = Math.max(maxDistance, Math.min(middleIdx - startIdx, i - middleIdx))
+          startIdx = i
+        }
+        i ++
+      }
+
+      if (parks[i - 1] === '0') {
+        maxDistance = Math.max(maxDistance, i - 1 - startIdx)
+      }
+
+      console.log(maxDistance)
+    }
+
+    // test
+    answer(`1,0,0,0,0,1,0,0,1,0,1`) // 2
+    answer(`0,0,1,1,0,0`) // 2
+    answer(`0,0,1,1,0,0,0`) // 3
+   </script>
+</body>
+</html>

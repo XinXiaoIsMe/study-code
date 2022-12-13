@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+   <!-- 
+    有N个正整数组成的一个序列
+         给定一个整数sum
+         求长度最长的的连续子序列使他们的和等于sum
+         返回次子序列的长度
+         如果没有满足要求的序列 返回-1
+         案例1：
+         输入
+         1,2,3,4,2
+         6
+         输出
+         3
+         解析：1,2,3和4,2两个序列均能满足要求
+         所以最长的连续序列为1,2,3 因此结果为3
+
+         示例2：
+         输入
+         1,2,3,4,2
+         20
+         输出
+         -1
+         解释：没有满足要求的子序列，返回-1
+
+         备注： 输入序列仅由数字和英文逗号构成
+         数字之间采用英文逗号分割
+         序列长度   1<=N<=200
+         输入序列不考虑异常情况
+         由题目保证输入序列满足要求
+    -->
+    <script>
+      function answer (input) {
+        const [nums, [target]] = input.split('\n').map(row => row.trim().split(',').map(Number))
+        console.log(findMaxLen(nums, target))
+
+        function findMaxLen (nums, target) {
+          let maxLen = -1
+          let sum = 0
+          let j
+          for (let i = 0; i < nums.length; i ++) {
+            sum = nums[i]
+            j = i + 1
+            for (; sum < target && j < nums.length; j ++) {
+              sum += nums[j]
+            }
+            if (sum === target) maxLen = Math.max(maxLen, j - i)
+          }
+          return maxLen
+        }
+      }
+
+      // test
+      answer(`1,2,3,4,2
+         6`) // 3
+      answer(`1,2,3,4,2
+         20`) // -1
+    </script>
+</body>
+</html>

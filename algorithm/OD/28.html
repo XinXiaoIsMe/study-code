@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <!-- 
+    输入一个字符串仅包含大小写字母和数字
+            求字符串中包含的最长的非严格递增连续数字序列长度
+            比如：
+                12234属于非严格递增数字序列
+            示例：
+            输入
+                abc2234019A334bc
+            输出
+                4
+            说明：
+                2234为最长的非严格递增连续数字序列，所以长度为4
+
+                aaaaaa44ko543j123j7345677781
+                aaaaa34567778a44ko543j123j71
+                345678a44ko543j123j7134567778aa
+   -->
+   <script>
+    function answer (str) {
+      const nums = str.split(/[a-zA-Z]+/).filter(value => value)
+      let res = 0
+      let startIdx = 0
+      let n
+
+      nums.forEach(num => {
+        for (let i = 0; i < num.length; i ++) {
+          if (num[i] < num[startIdx]) {
+            res = Math.max(res, i - startIdx)
+            startIdx = i
+          }
+        }
+        res = Math.max(res, num.length - startIdx)
+      })
+
+      console.log(res)
+    }
+
+    // test
+    answer(`abc2234019A334bc`) // 4
+    answer(`aaaaaa44ko543j123j7345677781`) // 8
+    answer(`aaaaa34567778a44ko543j123j71`) // 8
+    answer(`345678a44ko543j123j7134567778aa`) // 9
+   </script>
+</body>
+</html>

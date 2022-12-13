@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <!-- 
+    定义当一个字符串只有元音字母(a,e,i,o,u,A,E,I,O,U)组成,
+    称为元音字符串，现给定一个字符串，请找出其中最长的元音字符串，
+    并返回其长度，如果找不到请返回0，
+    字符串中任意一个连续字符组成的子序列称为该字符串的子串
+
+    输入描述：
+      一个字符串其长度 0<length ,字符串仅由字符a-z或A-Z组成
+    输出描述：
+      一个整数，表示最长的元音字符子串的长度
+
+    示例1：
+      输入
+        asdbuiodevauufgh
+      输出
+        3
+      说明：
+        最长的元音字符子串为uio和auu长度都为3，因此输出3
+   -->
+
+   <script>
+    // 使用滑动窗口的方式
+    function answer (str) {
+      let ret = 0
+      let p = -1
+      let char
+      const map = {
+        a: true,
+        e: true,
+        i: true,
+        o: true,
+        u: true
+      }
+
+      for (let i = 0; i < str.length; i ++) {
+        char = str[i].toLowerCase()
+        if (!map[char]) {
+          ret = Math.max(ret, i - p - 1)
+          p = i
+        }
+      }
+
+      if (p !== str.length - 1) {
+        ret = Math.max(ret, str.length - p - 1)
+      }
+
+      console.log(ret)
+    }
+
+    // test
+    answer('asdbuiodevauufgh') // 3
+    answer('asaeio') // 4
+   </script>
+</body>
+</html>

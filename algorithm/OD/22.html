@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <!-- 
+     给定一个字符串
+    只包含大写字母
+    求在包含同一字母的子串中
+    长度第K长的子串
+    相同字母只取最长的子串
+
+    输入
+     第一行 一个子串 1<len<=100
+     只包含大写字母
+     第二行为k的值
+
+     输出
+     输出连续出现次数第k多的字母的次数
+
+     例子：
+     输入
+             AABAAA
+             2
+     输出
+             1
+       同一字母连续出现最多的A 3次
+       第二多2次  但A出现连续3次
+
+    输入
+
+    AAAAHHHBBCDHHHH
+    3
+
+    输出
+    2
+
+//如果子串中只包含同一字母的子串数小于k
+
+则输出-1
+
+   -->
+
+   <script>
+    function answer (input) {
+      const [str, k] = input.split('\n').map(row => row.trim())
+      const map = {} // 保存每个字母对应字串中的最大长度
+      const countArr = [] // 保存所有字串
+      let cur = 0
+      let count = 0
+
+      for (let i = 0; i < str.length; i ++) {
+        if (str[i] === str[cur]) {
+          count ++
+        } else {
+          if (str[cur] in map) {
+            map[str[cur]] = Math.max(count, map[str[cur]])
+          } else {
+            map[str[cur]] = count
+          }
+          countArr.push({
+            key: str[cur],
+            count
+          })
+          count = 1
+          cur = i
+        }
+      }
+
+      // 统计末尾的字母
+      map[str[cur]] = count
+      countArr.push({
+        key: str[cur],
+        count
+      })
+
+      if (countArr.length < k) {
+        console.log('-1')
+        return
+      }
+
+      countArr.sort((a, b) => a.count - b.count) // 从小到大排序
+
+      let p = k
+      let res = countArr[p - 1].count
+      while (res !== map[countArr[p - 1].key]) { // 查找当前子串的长度是不是最长的，如果不是查找countArr中下一个位置的子串
+        p --
+        res = countArr[p - 1].count
+      }
+
+      console.log(res)
+    }
+
+    // test
+    answer(`AABAAA
+             2`) // 1
+    answer(`AAAAHHHBBCDHHHH
+    3`) // 2
+   </script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <!-- 
+    给定一个元素类型为小写字符串的数组
+        请计算两个没有相同字符的元素长度乘积的最大值
+        如果没有符合条件的两个元素返回0
+
+        输入描述
+          输入为一个半角逗号分割的小写字符串数组
+          2<= 数组长度 <=100
+          0< 字符串长度 <=50
+        输出描述
+          两个没有相同字符的元素长度乘积的最大值
+
+        示例一
+          输入
+            iwdvpbn,hk,iuop,iikd,kadgpf
+          输出
+            14
+          说明
+           数组中有5个元素  第一个和第二个元素没有相同字符
+           满足条件 输出7*2=14
+   -->
+
+   <script>
+    function answer (input) {
+      const strArr = input.split(',').map(str => ({
+        len: str.length,
+        charSet: new Set([...str])
+      }))
+      let res = 0
+
+      for (let i = 0; i < strArr.length; i ++) {
+        const sourceCharSet = strArr[i].charSet
+        const sourceLen = strArr[i].len
+        for (let j = i + 1; j < strArr.length; j ++) {
+          const { len, charSet } = strArr[j]
+          let flag = true
+          for (const char of sourceCharSet) {
+            if (charSet.has(char)) {
+              flag = false
+              break
+            }
+          }
+          if (flag) {
+            res = Math.max(res, len * sourceLen)
+          }
+        }
+      }
+
+      console.log(res)
+    }
+
+    // test
+    answer(`iwdvpbn,hk,iuop,iikd,kadgpf`)
+   </script>
+</body>
+</html>
